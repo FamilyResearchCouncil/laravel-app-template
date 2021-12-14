@@ -19,7 +19,7 @@ node {
             sh 'sed -i "s/^WWWUSER=.*/WWWUSER=$(id -u)/" .env'
             sh 'sed -i "s/^WWWGROUP=.*/WWWGROUP=$(id -g)/" .env'
 
-            sh 'cat .env'
+            sh 'source .env'
 
 //             sh "echo 'Pulling credentials from jenkins...'"
 
@@ -47,6 +47,7 @@ node {
 
             stage('deploy') {
                 echo "Deploying ${APP_DOMAIN}"
+
                 withCredentials([
                     string(credentialsId: 'deploy-server-ip', variable: 'SERVER_ADDRESS'),
                     string(credentialsId: 'deploy-server-username', variable: 'SERVER_USERNAME')
