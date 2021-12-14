@@ -16,8 +16,10 @@ node {
             sh 'test -f ".env" || { cp .env.example .env; }'
             sh 'test -f "docker-compose.override.yml" || { cp docker-compose.ci.yml docker-compose.override.yml; }'
 
-            sh 'ls -la .env*'
-            sh 'ls -la docker-compose*'
+            sh 'sed -i "s/^WWWUSER=.*/WWWUSER=$(id -u)/" .env'
+            sh 'sed -i "s/^WWWGROUP=.*/WWWGROUP=$(id -g)/" .env'
+
+            sh 'cat .env'
 
 //             sh "echo 'Pulling credentials from jenkins...'"
 
@@ -32,6 +34,7 @@ node {
         }
 
         stage('build'){
+            sh 'docker-compose build'
             sh 'docker-compose up -d --build'
         }
 

@@ -5,5 +5,8 @@ services:
     build:
       context: ./
       target: base
+      args:
+        - WWWUSER=${WWWUSER}
+        - WWWGROUP=${WWWGROUP}
     volumes:
       - ./.env:/var/www/html/.env
