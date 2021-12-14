@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  web:
+    image: nginx
+
+  app:
+    build:
+      context: ./
+
+  database:
+    image: mysql
