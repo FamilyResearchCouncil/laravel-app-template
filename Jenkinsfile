@@ -10,6 +10,9 @@ node {
 
             checkout scm
 
+            sh 'test -f ".env" || { cp .env.example .env; }'
+            sh 'test -f "docker-compose.override.yml" || { cp docker-compose.ci.yml docker-compose.override.yml; }'
+
 //             sh "echo 'Pulling credentials from jenkins...'"
 
 //             withCredentials([usernamePassword(credentialsId: 'database_creds', usernameVariable: 'DB_USERNAME', passwordVariable: 'DB_PASSWORD')]) {
@@ -27,7 +30,7 @@ node {
         }
 
         stage('test') {
-            sh "ls -la --color"
+            sh "docker-compose exec -T app ./artisan key:generate"
             sh "docker-compose exec -T app vendor/bin/phpunit"
         }
 
