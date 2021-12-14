@@ -17,6 +17,8 @@ COPY --chown=www-data:www-data . /var/www/html
 
 USER www-data
 
+RUN composer install
+
 #------------------------------
 # Build image for dev
 #------------------------------
@@ -26,9 +28,6 @@ USER root
 RUN install-php-extensions xdebug
 USER www-data
 
-RUN whoami
-
-RUN composer install
 
 #------------------------------
 # build assets for production
