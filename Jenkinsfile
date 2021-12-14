@@ -46,7 +46,16 @@ node {
         if( env.BRANCH_NAME == 'main' ){
 
             stage('deploy') {
-                echo "Deploying"
+                echo "Deploying ${APP_DOMAIN}"
+                withCredentials([
+                    string(credentialsId: 'deploy-server-ip', variable: 'SERVER_ADDRESS'),
+                    string(credentialsId: 'deploy-server-username', variable: 'SERVER_USERNAME')
+                ]) {
+
+                    sh "ssh ${SERVER_USERNAME}@${SERVER_ADDRESSS} ls -la"
+
+                }
+//                 sh "rsync deploy/ /docker/containers/${APP_DOMAIN}"
 
 //                 emailext    to: 'eab@frc.org',
 //                             subject: "BUILD ${env.BRANCH_NAME} : ${env.BUILD_ID} Deployed!",
