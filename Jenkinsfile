@@ -24,11 +24,10 @@ node {
 
         stage('build'){
             sh 'docker-compose up -d'
-            sh 'docker-compose exec app composer install'
         }
 
         stage('test') {
-            sh "docker-compose exec app vendor/bin/phpunit"
+            sh "docker-compose exec -T app vendor/bin/phpunit"
         }
 
         if( env.BRANCH_NAME == 'main' ){
