@@ -10,7 +10,7 @@ services:
   app:
     build:
       context: ./
-      target: dev
+      target: base
     volumes:
       - ./.env:/var/www/html/.env
 
