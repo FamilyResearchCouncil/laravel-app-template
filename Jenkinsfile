@@ -19,8 +19,6 @@ node {
             sh 'sed -i "s/^WWWUSER=.*/WWWUSER=$(id -u)/" .env'
             sh 'sed -i "s/^WWWGROUP=.*/WWWGROUP=$(id -g)/" .env'
 
-            sh 'source .env'
-
 //             sh "echo 'Pulling credentials from jenkins...'"
 
 //             withCredentials([usernamePassword(credentialsId: 'database_creds', usernameVariable: 'DB_USERNAME', passwordVariable: 'DB_PASSWORD')]) {
@@ -46,16 +44,17 @@ node {
         if( env.BRANCH_NAME == 'main' ){
 
             stage('deploy') {
-                echo "Deploying ${APP_DOMAIN}"
+                echo "Deploying"
+                sh "ssh docker01 ls -la"
 
-                withCredentials([
-                    string(credentialsId: 'deploy-server-ip', variable: 'SERVER_ADDRESS'),
-                    string(credentialsId: 'deploy-server-username', variable: 'SERVER_USERNAME')
-                ]) {
-
-                    sh "ssh ${SERVER_USERNAME}@${SERVER_ADDRESSS} ls -la"
-
-                }
+//                 withCredentials([
+//                     string(credentialsId: 'deploy-server-ip', variable: 'SERVER_ADDRESS'),
+//                     string(credentialsId: 'deploy-server-username', variable: 'SERVER_USERNAME')
+//                 ]) {
+//
+//                     sh "ssh ${SERVER_USERNAME}@${SERVER_ADDRESSS} ls -la"
+//
+//                 }
 //                 sh "rsync deploy/ /docker/containers/${APP_DOMAIN}"
 
 //                 emailext    to: 'eab@frc.org',
