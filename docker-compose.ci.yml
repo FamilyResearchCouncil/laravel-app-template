@@ -1,34 +1,9 @@
 version: "3.8"
 
 services:
-  web:
-    image: nginx
-    restart: unless-stopped
-    volumes:
-      - ./public:/var/www/html/public
-
   app:
     build:
       context: ./
       target: base
     volumes:
       - ./.env:/var/www/html/.env
-
-  mysql:
-    image: mysql:8.0
-    restart: unless-stopped
-    cap_add:
-      - SYS_NICE
-#      ports:
-#        - "33062:3306"
-    command:
-      - --sort_buffer_size=1073741824
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USERNAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-
-networks:
-  traefik:
-    external: true
