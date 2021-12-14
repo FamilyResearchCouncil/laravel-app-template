@@ -10,8 +10,14 @@ node {
 
             checkout scm
 
+            sh 'ls -la .env*'
+            sh 'ls -la docker-compose*'
+
             sh 'test -f ".env" || { cp .env.example .env; }'
             sh 'test -f "docker-compose.override.yml" || { cp docker-compose.ci.yml docker-compose.override.yml; }'
+
+            sh 'ls -la .env*'
+            sh 'ls -la docker-compose*'
 
 //             sh "echo 'Pulling credentials from jenkins...'"
 
