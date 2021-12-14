@@ -27,6 +27,7 @@ node {
         }
 
         stage('test') {
+            sh "ls -la --color"
             sh "docker-compose exec -T app vendor/bin/phpunit"
         }
 
