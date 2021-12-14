@@ -67,5 +67,6 @@ node {
         sh 'docker-compose down'
         sh 'docker container prune --force'
         sh 'test -f ".env" && { rm .env; }'
+        sh 'test -f "docker-compose.override.yml" && { rm docker-compose.override.yml; }'
     }
 }
