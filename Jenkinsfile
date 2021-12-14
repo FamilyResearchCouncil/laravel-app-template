@@ -23,7 +23,7 @@ node {
         }
 
         stage('build'){
-            sh 'docker-compose up -d'
+            sh 'docker-compose up -d --build'
         }
 
         stage('test') {
