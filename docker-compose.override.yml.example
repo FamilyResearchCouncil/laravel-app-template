@@ -1,0 +1,42 @@
+version: "3.8"
+
+# to get current user's id on linux, run: id -u
+services:
+  database:
+    image: mysql:8.0
+    ### set this to your users's id on linux
+    #user: '1000'
+    volumes:
+      - ./:/var/lib/mysql
+    ### modify the first port to your preference
+    ports:
+        - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+  php:
+    user: '1000'
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - ~/.config:/.config
+      - ~/.composer:/.composer
+    ports:
+      - "8081:80"
+    command: "php -S 0.0.0.0:80 -t /var/www/html/public"
+    networks:
+      - default
+### this configuration requires a traefik container to be running with a network of 'traefik_default'
+#      - traefik_default
+#    labels:
+#      traefik.enable: true
+#      traefik.docker.network: traefik_default
+#      traefik.http.routers.sienna-charles-next.rule: Host(`my-website.localhost`)
+#      traefik.http.routers.sienna-charles-next.entrypoints: web
+#      traefik.http.services.sienna-charles-next.loadbalancer.server.port: 80
+#networks:
+#  traefik_default:
+#    external: true

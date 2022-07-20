@@ -1,13 +1,9 @@
 version: "3.8"
 
+# this file serves as a place to define the basics of each service
+# options that should apply to any environment should be applied here.
+# if you need to modify the services based on a specific environment, copy the docker-compose.override.yml.example from (remove .example)
+# and make your modifications there.
 services:
-  web:
-    image: nginx
-
-  app:
-    build:
-      context: ./
-      target: base
-
-  database:
-    image: mysql
+  php:
+    image: familyresearchcouncil/php:8.1-fpm
