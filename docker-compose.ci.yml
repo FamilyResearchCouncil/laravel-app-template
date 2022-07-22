@@ -6,5 +6,4 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-      - ~/.config:/.config
-      - ~/.composer:/.composer
+      - ~/.composer:/var/www/.composer
