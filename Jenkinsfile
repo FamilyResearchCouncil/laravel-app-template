@@ -14,11 +14,10 @@ node {
             sh 'ls -la docker-compose*'
 
             sh 'test -f ".env" || { cp .env.example .env; }'
-            sh 'test -f "docker-compose.override.yml" || { cp docker-compose.override.yml.example docker-compose.override.yml; }'
+            sh 'test -f "docker-compose.override.yml" || { cp docker-compose.ci.yml docker-compose.override.yml; }'
 
             sh 'sed -i "s/^WWWUSER=.*/WWWUSER=$(id -u)/" .env'
             sh 'sed -i "s/^WWWGROUP=.*/WWWGROUP=$(id -g)/" .env'
-            sh 'sed -i "s/user: \'1000\'/user: \'$(id -g)\'/" .docker-compose.override.yml'
 
 //             sh "echo 'Pulling credentials from jenkins...'"
 
