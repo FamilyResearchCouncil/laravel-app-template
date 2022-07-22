@@ -7,3 +7,4 @@ services:
     volumes:
       - ./:/var/www/html
       - ~/.composer:/var/www/.composer
+      - /known_hosts:/var/www/.ssh/known_hosts
