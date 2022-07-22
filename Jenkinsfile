@@ -18,6 +18,7 @@ node {
 
             sh 'sed -i "s/^WWWUSER=.*/WWWUSER=$(id -u)/" .env'
             sh 'sed -i "s/^WWWGROUP=.*/WWWGROUP=$(id -g)/" .env'
+            sh 'sed -i "s/user: \'1000\'/user: \'$(id -g)\'/" .docker-compose.override.yml'
 
 //             sh "echo 'Pulling credentials from jenkins...'"
 
