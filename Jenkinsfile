@@ -32,8 +32,8 @@ node {
         }
 
         stage('build'){
-            sh 'docker-compose build'
-            sh 'docker-compose up -d --build'
+            sh 'docker-compose exec php composer install'
+//             sh 'docker-compose up -d --build'
         }
 
         stage('test') {
