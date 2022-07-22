@@ -32,12 +32,12 @@ node {
         }
 
         stage('build'){
-            sh "docker-compose run php composer install"
+            sh "docker-compose up -d"
+            sh "docker-compose exec -T php composer install"
 //             sh 'docker-compose up -d --build'
         }
 
         stage('test') {
-            sh "docker-compose up -d"
             sh "docker-compose exec -T php ./artisan key:generate"
             sh "docker-compose exec -T php vendor/bin/phpunit"
         }
