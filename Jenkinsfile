@@ -33,6 +33,13 @@ node {
 
         stage('build'){
             sh "docker-compose up -d"
+
+            sh 'ssh-keyscan github.com > ./known_hosts'
+            sh '''
+                docker-compose exec -T \
+                    -v ./known_hosts:/var/www/.ssh/known_hosts \
+                    php composer update frc/laravel-oracle
+            '''
             sh "docker-compose exec -T php composer install"
 //             sh 'docker-compose up -d --build'
         }
