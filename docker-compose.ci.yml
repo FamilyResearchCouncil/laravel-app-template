@@ -2,11 +2,6 @@ version: "3.8"
 
 services:
   app:
-    build:
-      context: ./
-      target: base
-      args:
-        - WWWUSER=${WWWUSER}
-        - WWWGROUP=${WWWGROUP}
+    image: familyresearchcouncil/php:8.1-fpm
     volumes:
       - ./.env:/var/www/html/.env

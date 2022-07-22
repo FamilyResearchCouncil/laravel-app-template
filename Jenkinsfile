@@ -14,7 +14,7 @@ node {
             sh 'ls -la docker-compose*'
 
             sh 'test -f ".env" || { cp .env.example .env; }'
-            sh 'test -f "docker-compose.override.yml" || { cp docker-compose.ci.yml docker-compose.override.yml; }'
+            sh 'test -f "docker-compose.override.yml" || { cp docker-compose.override.yml.example docker-compose.override.yml; }'
 
             sh 'sed -i "s/^WWWUSER=.*/WWWUSER=$(id -u)/" .env'
             sh 'sed -i "s/^WWWGROUP=.*/WWWGROUP=$(id -g)/" .env'
@@ -32,13 +32,13 @@ node {
         }
 
         stage('build'){
-            sh 'docker-compose exec php composer install'
+            sh "docker-compose exec -T php ./artisan key:generate"
 //             sh 'docker-compose up -d --build'
         }
 
         stage('test') {
-            sh "docker-compose exec -T app ./artisan key:generate"
-            sh "docker-compose exec -T app vendor/bin/phpunit"
+            sh "docker-compose exec -T php ./artisan key:generate"
+            sh "docker-compose exec -T php vendor/bin/phpunit"
         }
 
         if( env.BRANCH_NAME == 'main' ){
